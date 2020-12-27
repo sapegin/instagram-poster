@@ -11,13 +11,21 @@ IG_LOGIN=email
 IG_PASSWORD=password
 ```
 
-2. Install dependencies:
+2. Create a symlink to your photos folder:
+
+```
+ln -s /my/photos/folder photos
+```
+
+3. Add already published photos to `data/published.json`.
+
+4. Install dependencies:
 
 ```
 npm install
 ```
 
-2. Run:
+5. Run:
 
 ```
 npm start
