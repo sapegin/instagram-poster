@@ -1,0 +1,55 @@
+{
+  "name": "intagram-poster",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "Artem Sapegin",
+    "url": "https://sapegin.me"
+  },
+  "homepage": "https://github.com/sapegin/intagram-poster",
+  "repository": "sapegin/intagram-poster",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "start": "node src",
+    "lint": "eslint . --cache --fix",
+    "pretest": "npm run lint",
+    "format": "prettier --loglevel warn --write \"**/*.{js,md}\"",
+    "posttest": "npm run format"
+  },
+  "keywords": [],
+  "dependencies": {
+    "date-fns": "^2.16.1",
+    "delay": "^4.4.0",
+    "dotenv": "^8.2.0",
+    "exifr": "^6.0.0",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "lodash": "^4.17.20",
+    "pptr-testing-library": "^0.6.4",
+    "prompts": "^2.4.0",
+    "puppeteer": "^5.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-config-tamia": "^7.2.6",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,md}": "prettier --write"
+  }
+}
