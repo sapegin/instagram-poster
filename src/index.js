@@ -62,18 +62,12 @@ async function main() {
 
 	// TODO: Check #slfErrorAlert for errors
 
-	console.debug('Asking the security code');
-	const { securityCode } = await prompts({
-		type: 'text',
-		name: 'securityCode',
-		message: 'Enter security code',
-	});
+	console.debug('Waiting for the security code screen to load');
+	await waitFor(() => loginDoc.findByRole('button', { name: /confirm/i }));
 
-	console.debug('Entering the security code');
-	await (await loginDoc.findByLabelText(/security code/i)).type(securityCode);
-	await delay();
-	await (await loginDoc.findByRole('button', { name: /confirm/i })).click();
-	await delay();
+	console.log('Enter security code in the browser and press Confirm');
+
+	console.debug('Waiting for the security code submission');
 	await page.waitForNavigation();
 
 	// TODO: Check #twoFactorErrorAlert for errors
