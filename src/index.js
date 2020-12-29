@@ -23,7 +23,7 @@ async function main() {
 	console.debug('Launching Puppeteer');
 	const browser = await puppeteer.launch({
 		headless: false,
-		slowMo: 42,
+		slowMo: 13,
 		defaultViewport: {
 			width: 378,
 			height: 812,
