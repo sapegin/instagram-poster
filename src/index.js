@@ -62,7 +62,11 @@ async function main() {
 		);
 
 		console.debug('Closing cookies dialog');
-		await (await loginDoc.findByRole('button', { name: /accept/i })).click();
+		try {
+			await (await loginDoc.findByRole('button', { name: /accept/i })).click();
+		} catch (err) {
+			console.debug('No cookies dialog, skipping');
+		}
 
 		console.log('Enter login and password in the browser and press Log in');
 
