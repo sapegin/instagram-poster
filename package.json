@@ -1,13 +1,13 @@
 {
-  "name": "intagram-poster",
+  "name": "instagram-poster",
   "version": "1.0.0",
   "description": "",
   "author": {
     "name": "Artem Sapegin",
     "url": "https://sapegin.me"
   },
-  "homepage": "https://github.com/sapegin/intagram-poster",
-  "repository": "sapegin/intagram-poster",
+  "homepage": "https://github.com/sapegin/instagram-poster",
+  "repository": "sapegin/instagram-poster",
   "license": "MIT",
   "engines": {
     "node": ">=10"

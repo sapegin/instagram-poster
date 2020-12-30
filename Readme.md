@@ -1,4 +1,4 @@
-# intagram-poster
+# instagram-poster
 
 ...
 
@@ -33,6 +33,6 @@ npm start
 
 ## Authors and license
 
-[Artem Sapegin](https://sapegin.me) and [contributors](https://github.com/sapegin/intagram-poster/graphs/contributors).
+[Artem Sapegin](https://sapegin.me) and [contributors](https://github.com/sapegin/instagram-poster/graphs/contributors).
 
 MIT License, see the included [License.md](License.md) file.
