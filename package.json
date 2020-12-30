@@ -27,7 +27,6 @@
   "dependencies": {
     "date-fns": "^2.16.1",
     "delay": "^4.4.0",
-    "dotenv": "^8.2.0",
     "exifr": "^6.0.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",

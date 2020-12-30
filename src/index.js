@@ -1,8 +1,9 @@
 // Based on https://github.com/jamesgrams/instagram-poster
 
-require('dotenv').config();
 require('pptr-testing-library/extend');
 
+const path = require('path');
+const { readJson, writeJson } = require('fs-extra');
 const puppeteer = require('puppeteer');
 const { waitFor } = require('pptr-testing-library');
 const delayRange = require('delay').range;
@@ -11,8 +12,17 @@ const { getPhoto, markPhotoAsPublished } = require('./photo');
 
 const delay = () => delayRange(44, 444);
 
+const COOKIES_FILE = path.resolve(__dirname, '../.cookies');
 const USER_AGENT =
 	'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1';
+
+async function loadCookies() {
+	try {
+		return await readJson(COOKIES_FILE);
+	} catch (err) {
+		return [];
+	}
+}
 
 async function main() {
 	console.debug('Getting photo information');
@@ -35,42 +45,38 @@ async function main() {
 	// Instagram only allows posting on their mobile site, pretend we're on mobile
 	page.setUserAgent(USER_AGENT);
 
-	console.debug('Opening login page');
-	await page.goto('https://www.instagram.com/accounts/login/', {
-		waitUntil: 'networkidle2',
-	});
-	const loginDoc = await page.getDocument();
+	console.debug('Load athentication cookies from a file if it exists');
+	const cookies = await loadCookies();
+	await page.setCookie(...cookies);
 
-	console.debug('Waiting for the username input');
-	await waitFor(() => loginDoc.findByLabelText(/username/i, { visible: true }));
+	if (cookies.length === 0) {
+		console.debug('Opening login page');
+		await page.goto('https://www.instagram.com/accounts/login/', {
+			waitUntil: 'networkidle2',
+		});
+		const loginDoc = await page.getDocument();
 
-	console.debug('Closing cookies dialog');
-	await (await loginDoc.findByRole('button', { name: /accept/i })).click();
+		console.debug('Waiting for the username input');
+		await waitFor(() =>
+			loginDoc.findByLabelText(/username/i, { visible: true })
+		);
 
-	console.debug('Typing in the username and password');
-	await delay();
-	await (await loginDoc.findByLabelText(/username/i)).type(
-		process.env.IG_LOGIN
-	);
-	await delay();
-	await (await loginDoc.findByLabelText(/password/i)).type(
-		process.env.IG_PASSWORD
-	);
-	await delay();
-	await (await loginDoc.findByRole('button', { name: /log in/i })).click();
-	await delay();
+		console.debug('Closing cookies dialog');
+		await (await loginDoc.findByRole('button', { name: /accept/i })).click();
 
-	// TODO: Check #slfErrorAlert for errors
+		console.log('Enter login and password in the browser and press Log in');
 
-	console.debug('Waiting for the security code screen to load');
-	await waitFor(() => loginDoc.findByRole('button', { name: /confirm/i }));
+		console.debug('Waiting for the security code screen to load');
+		await waitFor(() => loginDoc.findByRole('button', { name: /confirm/i }));
 
-	console.log('Enter security code in the browser and press Confirm');
+		console.log('Enter security code in the browser and press Confirm');
 
-	console.debug('Waiting for the security code submission');
-	await page.waitForNavigation();
+		console.debug('Waiting for the security code submission');
+		await page.waitForNavigation();
 
-	// TODO: Check #twoFactorErrorAlert for errors
+		console.debug('Saving cookies');
+		writeJson(COOKIES_FILE, await page.cookies());
+	}
 
 	console.debug('Opening home page');
 	await page.goto('https://www.instagram.com/', {

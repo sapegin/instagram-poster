@@ -15,17 +15,17 @@ const TAG_RULES_FILE = path.resolve(__dirname, '../data/tags.json');
 const MAX_YEARS = 1;
 const MAX_TAGS = 30;
 
-function getPublishedPhotos() {
+async function getPublishedPhotos() {
 	try {
-		return readJson(PUBLISHED_PHOTOS_FILE);
+		return await readJson(PUBLISHED_PHOTOS_FILE);
 	} catch (err) {
 		return [];
 	}
 }
 
-function getTagRules() {
+async function getTagRules() {
 	try {
-		return readJson(TAG_RULES_FILE);
+		return await readJson(TAG_RULES_FILE);
 	} catch (err) {
 		return [];
 	}

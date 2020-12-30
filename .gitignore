@@ -8,4 +8,5 @@ Thumbs.db
 *.log
 .eslintcache
 .env
+.cookies
 data/published.json
