@@ -97,8 +97,12 @@ async function main() {
 	console.debug('Editing photo');
 	await waitFor(() => mainDoc.findByRole('button', { name: /next/i }));
 	await delay();
-	await (await mainDoc.findByRole('button', { name: /expand/i })).click();
-	await delay();
+	try {
+		await (await mainDoc.findByRole('button', { name: /expand/i })).click();
+		await delay();
+	} catch (err) {
+		// Expand button is missing on square photos
+	}
 	await (await mainDoc.findByRole('button', { name: /next/i })).click();
 	await delay();
 
