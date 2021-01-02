@@ -35,4 +35,6 @@ npm start
 
 [Artem Sapegin](https://sapegin.me) and [contributors](https://github.com/sapegin/instagram-poster/graphs/contributors).
 
+Based on [instagram-poster](https://github.com/jamesgrams/instagram-poster).
+
 MIT License, see the included [License.md](License.md) file.

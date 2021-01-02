@@ -1,5 +1,3 @@
-// Based on https://github.com/jamesgrams/instagram-poster
-
 require('pptr-testing-library/extend');
 
 const path = require('path');
@@ -7,7 +5,6 @@ const { readJson, writeJson } = require('fs-extra');
 const puppeteer = require('puppeteer');
 const { waitFor } = require('pptr-testing-library');
 const delayRange = require('delay').range;
-const prompts = require('prompts');
 const { getPhoto, markPhotoAsPublished } = require('./photo');
 
 const delay = () => delayRange(44, 444);
@@ -109,27 +106,17 @@ async function main() {
 	await waitFor(() => mainDoc.findByLabelText(/write a caption/i));
 	await delay();
 	await (await mainDoc.findByLabelText(/write a caption/i)).type(photo.caption);
-	await delay();
 
-	console.debug('Allow user to do any changes to the photo');
-	const { shouldPublish } = await prompts({
-		type: 'confirm',
-		name: 'shouldPublish',
-		message: 'Publish photo?',
-		initial: true,
-	});
+	console.log('Change the photo as you like and press Share');
 
-	if (shouldPublish) {
-		console.debug('Posting photo');
-		await waitFor(() => mainDoc.findByRole('button', { name: /^share$/i }));
-		await delay();
-		await (await mainDoc.findByRole('button', { name: /^share$/i })).click();
-		await delay();
+	console.debug('Waiting for the photo to be posted');
+	await waitFor(() => mainDoc.findByText(/your photo was posted/i));
 
-		await markPhotoAsPublished(photo);
-	}
+	await markPhotoAsPublished(photo);
 
-	await browser.close();
+	await delayRange(4444, 5555);
+
+	await await browser.close();
 
 	console.log('🦜 Done!');
 }
