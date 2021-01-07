@@ -1,31 +1,26 @@
 # instagram-poster
 
-...
+Automate photo publishing to Instagram. Published not yet published photos not older than one-year-old from a specified folder.
 
 ## Usage
 
-1. Create `.env` file:
+1. Create a config file, `~/.instagram-posterrc.json`:
 
-```
-IG_LOGIN=email
-IG_PASSWORD=password
-```
-
-2. Create a symlink to your photos folder:
-
-```
-ln -s /my/photos/folder photos
+```json
+{
+  "photos": "~/folder/with/your/photos"
+}
 ```
 
-3. Add already published photos to `data/published.json`.
+2. Add already published photos to `data/published.json`.
 
-4. Install dependencies:
+3. Install dependencies:
 
 ```
 npm install
 ```
 
-5. Run:
+4. Run:
 
 ```
 npm start

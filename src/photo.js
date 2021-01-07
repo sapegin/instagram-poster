@@ -1,5 +1,6 @@
 const path = require('path');
 const { readFile, readJson, writeJson } = require('fs-extra');
+const untildify = require('untildify');
 const fp = require('lodash/fp');
 const differenceInYears = require('date-fns/differenceInYears');
 const glob = require('glob');
@@ -9,7 +10,6 @@ const { flow, map, filter, flatten, shuffle, slice, sample } = fp.convert({
 	cap: false,
 });
 
-const PHOTOS_DIR = path.resolve(__dirname, '../photos');
 const PUBLISHED_PHOTOS_FILE = path.resolve(__dirname, '../data/published.json');
 const TAG_RULES_FILE = path.resolve(__dirname, '../data/tags.json');
 const MAX_YEARS = 1;
@@ -40,8 +40,8 @@ function generateTags(photo, rules) {
 	)(photo.keywords);
 }
 
-async function getPhoto() {
-	const allPhotoFiles = glob.sync(path.join(PHOTOS_DIR, '*.jpg'));
+async function getPhoto(photosDir) {
+	const allPhotoFiles = glob.sync(path.join(untildify(photosDir), '*.jpg'));
 	const allPhotoExifs = await Promise.all(
 		allPhotoFiles.map(async (file) => {
 			const buffer = await readFile(file);
@@ -71,6 +71,11 @@ async function getPhoto() {
 		filter((p) => !publishedPhotos.includes(p.name)),
 		sample
 	)(allPhotoExifs);
+
+	if (!photo) {
+		console.error('No unpublished photos found');
+		process.exit(1);
+	}
 
 	const tags = generateTags(photo, tagRules);
 

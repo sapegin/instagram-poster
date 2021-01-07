@@ -23,6 +23,7 @@
     "posttest": "npm run format"
   },
   "dependencies": {
+    "cosmiconfig": "^7.0.0",
     "date-fns": "^2.16.1",
     "delay": "^4.4.0",
     "exifr": "^6.0.0",
@@ -30,7 +31,8 @@
     "glob": "^7.1.6",
     "lodash": "^4.17.20",
     "pptr-testing-library": "^0.6.4",
-    "puppeteer": "^5.5.0"
+    "puppeteer": "^5.5.0",
+    "untildify": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^7.16.0",

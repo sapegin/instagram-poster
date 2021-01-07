@@ -6,6 +6,7 @@ const puppeteer = require('puppeteer');
 const { waitFor } = require('pptr-testing-library');
 const delayRange = require('delay').range;
 const { getPhoto, markPhotoAsPublished } = require('./photo');
+const { getConfig } = require('./config');
 
 const delay = () => delayRange(44, 444);
 
@@ -22,8 +23,11 @@ async function loadCookies() {
 }
 
 async function main() {
+	console.debug('Reading config file');
+	const config = await getConfig();
+
 	console.debug('Getting photo information');
-	const photo = await getPhoto();
+	const photo = await getPhoto(config.photos);
 
 	console.log(`Publishing ${photo.name}...`);
 
