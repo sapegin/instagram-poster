@@ -40,8 +40,10 @@ function generateTags(photo, rules) {
 	)(photo.keywords);
 }
 
-async function getPhoto(photosDir) {
-	const allPhotoFiles = glob.sync(path.join(untildify(photosDir), '*.jpg'));
+async function getPhoto(photosDir, photoName) {
+	const allPhotoFiles = photoName
+		? [path.resolve(untildify(photosDir), `${photoName}.jpg`)]
+		: glob.sync(path.join(untildify(photosDir), '*.jpg'));
 	const allPhotoExifs = await Promise.all(
 		allPhotoFiles.map(async (file) => {
 			const buffer = await readFile(file);

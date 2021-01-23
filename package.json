@@ -11,9 +11,11 @@
   "engines": {
     "node": ">=10"
   },
-  "main": "index.js",
+  "main": "src/index.js",
+  "bin": "bin/instagram-poster.js",
   "files": [
-    "index.js"
+    "bin",
+    "src"
   ],
   "scripts": {
     "start": "node src",
@@ -29,7 +31,10 @@
     "exifr": "^6.0.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
+    "kleur": "^4.1.4",
     "lodash": "^4.17.20",
+    "longest": "^2.0.1",
+    "minimist": "^1.2.5",
     "pptr-testing-library": "^0.6.4",
     "puppeteer": "^5.5.0",
     "untildify": "^4.0.0"

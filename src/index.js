@@ -22,12 +22,12 @@ async function loadCookies() {
 	}
 }
 
-async function main() {
+async function publishPhoto(photoName) {
 	console.debug('Reading config file');
 	const config = await getConfig();
 
 	console.debug('Getting photo information');
-	const photo = await getPhoto(config.photos);
+	const photo = await getPhoto(config.photos, photoName);
 
 	console.log(`Publishing ${photo.name}...`);
 
@@ -129,4 +129,6 @@ async function main() {
 	console.log('🦜 Done!');
 }
 
-main();
+module.exports = {
+	publishPhoto,
+};

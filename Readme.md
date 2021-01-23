@@ -1,6 +1,6 @@
 # instagram-poster
 
-Automate photo publishing to Instagram. Published not yet published photos not older than one-year-old from a specified folder.
+Automate photo publishing to Instagram: instagram-poster publishes not yet published photos not older than one-year-old from a specified folder.
 
 ## Usage
 
@@ -23,7 +23,7 @@ npm install
 4. Run:
 
 ```
-npm start
+bin/instagram-poster.js
 ```
 
 ## Authors and license
