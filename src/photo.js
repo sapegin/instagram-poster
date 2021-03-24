@@ -46,12 +46,18 @@ async function getPhoto(photosDir, photoName) {
 		: glob.sync(path.join(untildify(photosDir), '*.jpg'));
 	const allPhotoExifs = await Promise.all(
 		allPhotoFiles.map(async (file) => {
-			const buffer = await readFile(file);
-			return exifr.parse(buffer, {
-				iptc: true,
-				exif: true,
-				gps: false,
-			});
+			try {
+				const buffer = await readFile(file);
+				return exifr.parse(buffer, {
+					iptc: true,
+					exif: true,
+					gps: false,
+				});
+			} catch (err) {
+				console.error(`Cannot load photo: ${photoName}`, err);
+				process.exit(1);
+				return undefined;
+			}
 		})
 	);
 
@@ -69,13 +75,17 @@ async function getPhoto(photosDir, photoName) {
 			camera: p.Make,
 		})),
 		filter((p) => p.camera !== 'Apple'),
-		filter((p) => differenceInYears(p.date, Date.now()) < MAX_YEARS),
+		filter((p) => !p.date || differenceInYears(p.date, Date.now()) < MAX_YEARS),
 		filter((p) => !publishedPhotos.includes(p.name)),
 		sample
 	)(allPhotoExifs);
 
 	if (!photo) {
-		console.error('No unpublished photos found');
+		if (photoName) {
+			console.error(`Cannot parse photo: ${photoName}`);
+		} else {
+			console.error('Cannot find any photos to publish');
+		}
 		process.exit(1);
 	}
 
