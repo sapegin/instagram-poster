@@ -34,7 +34,7 @@
     "kleur": "^4.1.4",
     "lodash": "^4.17.20",
     "longest": "^2.0.1",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "pptr-testing-library": "^0.6.4",
     "puppeteer": "^5.5.0",
     "untildify": "^4.0.0"
